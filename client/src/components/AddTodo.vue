@@ -26,6 +26,7 @@ export default {
       e.preventDefault();
 
       this.addTodo(this.name);
+      this.name = "";
     }
   }
 };
