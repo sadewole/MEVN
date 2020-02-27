@@ -46,13 +46,27 @@ const actions = {
         const response = await axios.get(`${url}`)
         commit('setTodos', response.data.splice(0, limit))
 
+    },
+
+    async updateTodo({
+        commit
+    }, updTodo) {
+        const response = await axios.put(`${url}/${updTodo._id}`)
+
+        commit('updateTodo', response.data)
     }
 }
 
 const mutations = {
     setTodos: (state, todos) => (state.todos = todos),
     newTodo: (state, todo) => state.todos.unshift(todo),
-    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo._id !== id)
+    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo._id !== id),
+    updateTodo: (state, updTodo) => {
+        const index = state.todos.findIndex(todo => todo._id === updTodo._id)
+        if (index !== -1) {
+            state.todos.splice(index, 1, updTodo)
+        }
+    }
 }
 
 export default {
