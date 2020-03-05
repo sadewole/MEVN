@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // @route Post api/items
 // @desc  Add items
 // @access Private
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
     const {
         name
     } = req.body
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 // @route PUT api/items/:id
 // @desc Update item
 // @access Private
-router.put('/:id', (req, res) => {
+router.put('/:id', auth, (req, res) => {
     Item.findById(req.params.id)
         .then(item => {
             if (item.completed === false) {
@@ -55,7 +55,7 @@ router.put('/:id', (req, res) => {
 // @route Delete api/items/:id
 // @desc  Delete item
 // @access Private
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({
                 success: true

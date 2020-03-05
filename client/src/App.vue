@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <div class="container">
       <AddTodo />
       <FilterTodo />
@@ -12,19 +13,24 @@
 import Todo from "./components/Todo.vue";
 import AddTodo from "./components/AddTodo.vue";
 import FilterTodo from "./components/FilterTodo.vue";
+import Navbar from "./components/Navbar.vue";
 
 export default {
   name: "app",
   components: {
     Todo,
     AddTodo,
-    FilterTodo
+    FilterTodo,
+    Navbar
   }
 };
 </script>
 
 <style>
 body {
+  padding: 0;
+  margin: 0 !important;
+  box-sizing: border-box;
   font-family: "Franflin Gothic Medium", "Arial Narrow", Arial, san-serif;
   line-height: 1.6;
   background: #e8f7f0;
