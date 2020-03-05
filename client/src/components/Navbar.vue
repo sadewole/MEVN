@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import LoginModal from './LoginModal';
+import LoginModal from "./LoginModal";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   components: {
     LoginModal
   }
@@ -38,6 +38,7 @@ export default {
   width: 100%;
   overflow: hidden;
   color: #fff;
+  margin-bottom: 15px;
 }
 
 a {
@@ -51,6 +52,7 @@ a {
   justify-content: space-between;
   max-width: 1100px;
   margin: auto;
+  height: inherit;
   overflow: auto;
   padding: 0 2rem;
 }

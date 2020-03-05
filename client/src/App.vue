@@ -27,9 +27,12 @@ export default {
 </script>
 
 <style>
-body {
+* {
   padding: 0;
-  margin: 0 !important;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
   box-sizing: border-box;
   font-family: "Franflin Gothic Medium", "Arial Narrow", Arial, san-serif;
   line-height: 1.6;
