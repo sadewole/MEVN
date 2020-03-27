@@ -1,6 +1,7 @@
 <template>
   <div>
-    <LoginModal v-model="isLoginModalOpen" />
+    <VLogModal />
+    <VRegisterModal />
     <div class="navbar">
       <div class="container">
         <a href="#">MEVN Todo Manager</a>
@@ -8,10 +9,10 @@
         <div class="link">
           <ul>
             <li>
-              <a href="#">Register</a>
+              <a href="#" @click="showRegister">Register</a>
             </li>
             <li>
-              <a href="#" @click="handleLoginModal">Login</a>
+              <a href="#" @click="showLogin">Login</a>
             </li>
           </ul>
         </div>
@@ -21,21 +22,33 @@
 </template>
 
 <script>
-import LoginModal from "./LoginModal";
+import VLogModal from './VLogModal';
+import VRegisterModal from './VRegisterModal';
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {
-    LoginModal
+    VLogModal,
+    VRegisterModal
   },
   data() {
     return {
-      isLoginModalOpen: false
+      isLoginModalOpen: false,
+      isRegisterModalOpen: false
     };
   },
   methods: {
-    handleLoginModal() {
-      this.isLoginModalOpen = !this.isLoginModalOpen;
+    showLogin() {
+      this.$modal.show('login-modal');
+    },
+    hideLogin() {
+      this.$modal.hide('login-modal');
+    },
+    showRegister() {
+      this.$modal.show('register-modal');
+    },
+    hideRegister() {
+      this.$modal.hide('register-modal');
     }
   }
 };

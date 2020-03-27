@@ -1,6 +1,8 @@
 import axios from 'axios'
+import {
+    url
+} from '../../utils/config'
 
-const url = 'http://localhost:5000/api/v1/item'
 
 const state = {
     todos: []
@@ -14,7 +16,7 @@ const actions = {
     async fetchTodos({
         commit
     }) {
-        const response = await axios.get(`${url}`)
+        const response = await axios.get(`${url}/item`)
         commit('setTodos', response.data)
     },
 

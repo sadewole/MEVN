@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import Todo from "./components/Todo.vue";
-import AddTodo from "./components/AddTodo.vue";
-import FilterTodo from "./components/FilterTodo.vue";
-import Navbar from "./components/Navbar.vue";
+import Todo from './components/Todo.vue';
+import AddTodo from './components/AddTodo.vue';
+import FilterTodo from './components/FilterTodo.vue';
+import Navbar from './components/Navbar.vue';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     Todo,
     AddTodo,
@@ -34,7 +34,7 @@ export default {
 }
 body {
   box-sizing: border-box;
-  font-family: "Franflin Gothic Medium", "Arial Narrow", Arial, san-serif;
+  font-family: 'Franflin Gothic Medium', 'Arial Narrow', Arial, san-serif;
   line-height: 1.6;
   background: #e8f7f0;
 }
@@ -44,5 +44,13 @@ body {
   overflow: auto;
   padding: 0 2rem;
 }
-</style>
 
+.v--modal-overlay .v--modal-box.v--modal {
+  width: 600px !important;
+  height: inherit !important;
+  margin: 30px auto !important;
+  padding: 10px !important;
+  top: 0px !important;
+  left: 0px !important;
+}
+</style>
