@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div :class="`modal-container ${isOpen?'show': 'hide'}`" @click="isOpen = false">
-      <div class="modal" @click="isOpen = true">
+    <div :class="`modal-container ${value ? 'show' : 'hide'}`">
+      <div class="modal">
         <form>
           <div class="form-group">
             <label>Email:</label>
@@ -21,10 +21,19 @@
 <script>
 export default {
   name: "loginModal",
-  data() {
-    return {
-      isOpen: true
-    };
+  props: {
+    value: {
+      required: true
+    }
+  },
+  methods: {},
+  mounted() {
+    const modalContainer = document.querySelector(".modal-container");
+    window.addEventListener("click", e => {
+      if (e.target === modalContainer) {
+        this.$emit("input", !this.value);
+      }
+    });
   }
 };
 </script>

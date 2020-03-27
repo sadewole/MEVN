@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoginModal />
+    <LoginModal v-model="isLoginModalOpen" />
     <div class="navbar">
       <div class="container">
         <a href="#">MEVN Todo Manager</a>
@@ -11,7 +11,7 @@
               <a href="#">Register</a>
             </li>
             <li>
-              <a href="#">Login</a>
+              <a href="#" @click="handleLoginModal">Login</a>
             </li>
           </ul>
         </div>
@@ -27,6 +27,16 @@ export default {
   name: "Navbar",
   components: {
     LoginModal
+  },
+  data() {
+    return {
+      isLoginModalOpen: false
+    };
+  },
+  methods: {
+    handleLoginModal() {
+      this.isLoginModalOpen = !this.isLoginModalOpen;
+    }
   }
 };
 </script>
