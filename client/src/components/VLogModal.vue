@@ -1,13 +1,13 @@
 <template>
   <modal name="login-modal">
-    <form>
+    <form @submit.prevent="onSubmit">
       <div class="form-group">
         <label>Email:</label>
-        <input type="text" autocomplete="false" />
+        <input type="email" autocomplete="false" v-model="email" />
       </div>
       <div class="form-group">
         <label>Password:</label>
-        <input type="password" autocomplete="false" />
+        <input type="password" autocomplete="false" v-model="password" />
       </div>
       <button class="btn">Login</button>
     </form>
@@ -16,7 +16,20 @@
 
 <script>
 export default {
-  methods: {}
+  data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
 };
 </script>
 

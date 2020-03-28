@@ -17,13 +17,6 @@ const getters = {
 }
 
 const actions = {
-    setUserConfig(payload) {
-        localStorage.setItem('token', payload.token)
-        axios.defaults.headers = {
-            "Content-Type": "application/json",
-            "x-access-token": localStorage.getItem("token")
-        }
-    },
     async register({
         commit
     }, data) {
@@ -31,12 +24,11 @@ const actions = {
             const config = {
                 'Content-Type': 'application/json'
             }
-            const body = JSON.stringify(data)
-            const res = await axios.post(`${url}/auth`, body, config)
-            this.setUserConfig(res.data)
+            const res = await axios.post(`${url}/user`, data, config)
+            setUserConfig(res.data)
             commit('authSuccess', res.data)
         } catch (err) {
-            commit('authError', err.message)
+            commit('authError', err.response.data)
         }
     },
     async login({
@@ -46,12 +38,11 @@ const actions = {
             const config = {
                 'Content-Type': 'application/json'
             }
-            const body = JSON.stringify(data)
-            const res = await axios.post(`${url}/user`, body, config)
-            this.setUserConfig(res.data)
+            const res = await axios.post(`${url}/auth`, data, config)
+            setUserConfig(res.data)
             commit('authSuccess', res.data)
         } catch (err) {
-            commit('authError', err)
+            commit('authError', err.response.data)
         }
     }
 }
@@ -61,8 +52,22 @@ const mutations = {
         state.authenticate = true
         state.user = response.user
         state.token = localStorage.getItem('token')
+        state.message = ''
     },
-    authError: (state, response) => state.message = response.msg
+    authError: (state, response) => {
+        state.message = response.msg
+        state.authenticate = false
+        state.user = null
+        state.token = null
+    }
+}
+
+export const setUserConfig = (payload) => {
+    localStorage.setItem('token', payload.token)
+    axios.defaults.headers = {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("token")
+    }
 }
 
 export default {

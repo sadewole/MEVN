@@ -1,25 +1,62 @@
 <template>
   <modal name="register-modal">
-    <form>
+    <form @submit.prevent="onSubmit">
       <div class="form-group">
         <label>Name:</label>
-        <input type="text" autocomplete="false" />
+        <input type="text" autocomplete="false" v-model="name" />
       </div>
       <div class="form-group">
         <label>Email:</label>
-        <input type="email" autocomplete="false" />
+        <input type="email" autocomplete="false" v-model="email" />
       </div>
       <div class="form-group">
         <label>Password:</label>
-        <input type="password" autocomplete="false" />
+        <input type="password" autocomplete="false" v-model="password" />
       </div>
+      <p style="color: red">{{ message }}</p>
       <button class="btn">Register</button>
     </form>
   </modal>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      message: ""
+    };
+  },
+  methods: {
+    resetState() {
+      this.name = "";
+      this.email = "";
+      this.password = "";
+    },
+    onSubmit() {
+      this.$store.dispatch("register", {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      });
+    }
+  },
+  computed: {},
+  updated() {
+    if (this.$store.state.auth.message !== "") {
+      this.message = this.$store.state.auth.message;
+    } else {
+      this.message = "";
+    }
+
+    if (this.$store.state.auth.authenticate) {
+      this.$modal.hide("register-modal");
+      this.resetState();
+    }
+  }
+};
 </script>
 
 <style scoped>

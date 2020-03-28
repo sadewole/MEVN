@@ -8,16 +8,17 @@ const auth = require('../../middleware/auth')
 const User = require('../../model/user')
 
 // route POST api/v1/auth
-// @desc POST auth
+// @desc POST auth user
 // @access public
 router.post('/', (req, res) => {
     const {
+        name,
         email,
         password
     } = req.body
 
     // Simple validation
-    if (!email || !password) {
+    if (!name, !email || !password) {
         return res.status(400).json({
             msg: 'Please enter fields'
         })

@@ -11,7 +11,8 @@ const dbURI = 'mongodb://localhost:27017/mevn-shopping'
 // connect to mongodb
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
