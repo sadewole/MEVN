@@ -19,7 +19,7 @@
         v-bind:class="{'is-complete': todo.completed}"
       >
         {{todo.name}}
-        <i @click="deleteTodo(todo._id)" class="fas fa-trash-alt"></i>
+        <i v-if="authenticate" @click="deleteTodo(todo._id)" class="fas fa-trash-alt"></i>
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
   methods: {
     ...mapActions(["fetchTodos", "deleteTodo", "updateTodo"])
   },
-  computed: mapGetters(["allTodos"]),
+  computed: { ...mapGetters(["allTodos", "authenticate"]) },
   created() {
     this.fetchTodos();
   }

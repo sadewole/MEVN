@@ -3,7 +3,6 @@ import {
     url
 } from '../../utils/config'
 
-
 const state = {
     todos: []
 }
@@ -23,7 +22,7 @@ const actions = {
     async addTodo({
         commit
     }, name) {
-        const response = await axios.post(`${url}`, {
+        const response = await axios.post(`${url}/item`, {
             name
         })
 
@@ -33,7 +32,7 @@ const actions = {
     async deleteTodo({
         commit
     }, id) {
-        await axios.delete(`${url}/${id}`)
+        await axios.delete(`${url}/item/${id}`)
 
         commit('removeTodo', id)
     },
@@ -53,9 +52,15 @@ const actions = {
     async updateTodo({
         commit
     }, updTodo) {
-        const response = await axios.put(`${url}/${updTodo._id}`)
+        try {
+            const response = await axios.put(`${url}/item/${updTodo._id}`)
 
-        commit('updateTodo', response.data)
+            commit('updateTodo', response.data)
+
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.log(err.response)
+        }
     }
 }
 

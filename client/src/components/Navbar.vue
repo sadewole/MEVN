@@ -18,7 +18,7 @@
             </div>
             <div v-else>
               <li>
-                <a href="#">Logout</a>
+                <a href="#" @click="logout">Logout</a>
               </li>
             </div>
           </ul>
@@ -31,7 +31,7 @@
 <script>
 import VLogModal from "./VLogModal";
 import VRegisterModal from "./VRegisterModal";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Navbar",
@@ -46,6 +46,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["logout"]),
     showLogin() {
       this.$modal.show("login-modal");
     },

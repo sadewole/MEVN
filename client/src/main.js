@@ -4,7 +4,9 @@ import store from './store'
 import VModal from 'vue-js-modal'
 import setAuthToken from './utils/setAuthToken'
 
+
 setAuthToken(localStorage.token)
+
 Vue.use(VModal)
 Vue.config.productionTip = false
 

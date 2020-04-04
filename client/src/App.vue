@@ -2,26 +2,36 @@
   <div>
     <Navbar />
     <div class="container">
-      <AddTodo />
-      <FilterTodo />
+      <div v-if="isAuthenticated">
+        <AddTodo />
+        <FilterTodo />
+      </div>
+      <div v-else>
+        <h4 class="unauth">Please log in to manage items</h4>
+      </div>
       <Todo />
     </div>
   </div>
 </template>
 
 <script>
-import Todo from './components/Todo.vue';
-import AddTodo from './components/AddTodo.vue';
-import FilterTodo from './components/FilterTodo.vue';
-import Navbar from './components/Navbar.vue';
+import Todo from "./components/Todo.vue";
+import AddTodo from "./components/AddTodo.vue";
+import FilterTodo from "./components/FilterTodo.vue";
+import Navbar from "./components/Navbar.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Todo,
     AddTodo,
     FilterTodo,
     Navbar
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.auth.authenticate;
+    }
   }
 };
 </script>
@@ -34,7 +44,7 @@ export default {
 }
 body {
   box-sizing: border-box;
-  font-family: 'Franflin Gothic Medium', 'Arial Narrow', Arial, san-serif;
+  font-family: "Franflin Gothic Medium", "Arial Narrow", Arial, san-serif;
   line-height: 1.6;
   background: #e8f7f0;
 }
@@ -43,6 +53,10 @@ body {
   margin: auto;
   overflow: auto;
   padding: 0 2rem;
+}
+
+.unauth {
+  margin: 1rem;
 }
 
 .v--modal-overlay .v--modal-box.v--modal {
