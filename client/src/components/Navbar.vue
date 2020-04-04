@@ -8,12 +8,19 @@
 
         <div class="link">
           <ul>
-            <li>
-              <a href="#" @click="showRegister">Register</a>
-            </li>
-            <li>
-              <a href="#" @click="showLogin">Login</a>
-            </li>
+            <div v-if="!authenticate">
+              <li>
+                <a href="#" @click="showRegister">Register</a>
+              </li>
+              <li>
+                <a href="#" @click="showLogin">Login</a>
+              </li>
+            </div>
+            <div v-else>
+              <li>
+                <a href="#">Logout</a>
+              </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -22,11 +29,12 @@
 </template>
 
 <script>
-import VLogModal from './VLogModal';
-import VRegisterModal from './VRegisterModal';
+import VLogModal from "./VLogModal";
+import VRegisterModal from "./VRegisterModal";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   components: {
     VLogModal,
     VRegisterModal
@@ -39,18 +47,20 @@ export default {
   },
   methods: {
     showLogin() {
-      this.$modal.show('login-modal');
+      this.$modal.show("login-modal");
     },
     hideLogin() {
-      this.$modal.hide('login-modal');
+      this.$modal.hide("login-modal");
     },
     showRegister() {
-      this.$modal.show('register-modal');
+      this.$modal.show("register-modal");
     },
     hideRegister() {
-      this.$modal.hide('register-modal');
+      this.$modal.hide("register-modal");
     }
-  }
+  },
+  computed: mapGetters(["authenticate"]),
+  mounted() {}
 };
 </script>
 

@@ -7,7 +7,7 @@ const state = {
     authenticate: false,
     token: null,
     user: null,
-    message: ''
+    message: null
 }
 
 const getters = {
@@ -25,7 +25,6 @@ const actions = {
                 'Content-Type': 'application/json'
             }
             const res = await axios.post(`${url}/user`, data, config)
-            setUserConfig(res.data)
             commit('authSuccess', res.data)
         } catch (err) {
             commit('authError', err.response.data)
@@ -39,7 +38,6 @@ const actions = {
                 'Content-Type': 'application/json'
             }
             const res = await axios.post(`${url}/auth`, data, config)
-            setUserConfig(res.data)
             commit('authSuccess', res.data)
         } catch (err) {
             commit('authError', err.response.data)
@@ -49,24 +47,16 @@ const actions = {
 
 const mutations = {
     authSuccess: (state, response) => {
-        state.authenticate = true
         state.user = response.user
+        state.authenticate = true
         state.token = localStorage.getItem('token')
-        state.message = ''
+        state.message = null
     },
     authError: (state, response) => {
         state.message = response.msg
         state.authenticate = false
         state.user = null
         state.token = null
-    }
-}
-
-export const setUserConfig = (payload) => {
-    localStorage.setItem('token', payload.token)
-    axios.defaults.headers = {
-        "Content-Type": "application/json",
-        "x-access-token": localStorage.getItem("token")
     }
 }
 

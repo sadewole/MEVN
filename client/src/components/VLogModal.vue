@@ -9,12 +9,16 @@
         <label>Password:</label>
         <input type="password" autocomplete="false" v-model="password" />
       </div>
+      <p v-if="message !== null" class="red">
+        {{ message }}
+      </p>
       <button class="btn">Login</button>
     </form>
   </modal>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -29,6 +33,11 @@ export default {
         password: this.password
       });
     }
+  },
+  computed: mapGetters(['message']),
+  mounted() {
+    // // eslint-disable-next-line no-console
+    // console.log(this.errMessage);
   }
 };
 </script>
@@ -63,5 +72,9 @@ export default {
 
 .btn:hover {
   opacity: 0.7;
+}
+
+.red {
+  color: red;
 }
 </style>
