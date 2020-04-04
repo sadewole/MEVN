@@ -44,7 +44,7 @@ const actions = {
         const limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
 
 
-        const response = await axios.get(`${url}`)
+        const response = await axios.get(`${url}/item/`)
         commit('setTodos', response.data.splice(0, limit))
 
     },
@@ -52,15 +52,9 @@ const actions = {
     async updateTodo({
         commit
     }, updTodo) {
-        try {
-            const response = await axios.put(`${url}/item/${updTodo._id}`)
+        const response = await axios.put(`${url}/item/${updTodo._id}`)
 
-            commit('updateTodo', response.data)
-
-        } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err.response)
-        }
+        commit('updateTodo', response.data)
     }
 }
 

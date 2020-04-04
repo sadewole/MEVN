@@ -12,7 +12,7 @@
     </div>
     <div class="todos">
       <div
-        @dblclick="updateTodo(todo)"
+        @dblclick="authenticate? updateTodo(todo): ''"
         v-for="todo in allTodos"
         :key="todo._id"
         class="todo"
