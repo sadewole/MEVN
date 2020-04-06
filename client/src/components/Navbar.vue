@@ -60,8 +60,7 @@ export default {
       this.$modal.hide("register-modal");
     }
   },
-  computed: mapGetters(["authenticate"]),
-  mounted() {}
+  computed: mapGetters(["authenticate"])
 };
 </script>
 
