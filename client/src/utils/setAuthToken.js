@@ -6,7 +6,6 @@ const setAuthToken = token => {
             "Content-Type": "application/json",
             "x-auth-token": localStorage.getItem("token")
         };
-
     } else {
         localStorage.removeItem('token')
         delete axios.defaults.headers['x-auth-token']

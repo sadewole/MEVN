@@ -1,59 +1,61 @@
 <template>
   <modal name="register-modal">
-    <form @submit.prevent="onSubmit">
-      <div class="form-group">
-        <label>Name:</label>
-        <input type="text" autocomplete="false" v-model="name" />
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" autocomplete="false" v-model="email" />
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" autocomplete="false" v-model="password" />
-      </div>
-      <p style="color: red">{{ message }}</p>
-      <button class="btn">Register</button>
-    </form>
+    <ValidationObserver ref="form">
+      <form @submit.prevent="onSubmit">
+        <ValidationProvider name="email" rules="required" v-slot="{errors}">
+          <div class="form-group">
+            <label>Email:</label>
+            <input type="email" autocomplete="false" v-model="email" />
+            <span class="red">{{errors[0]}}</span>
+          </div>
+        </ValidationProvider>
+        <ValidationProvider name="password" rules="required" v-slot="{errors}">
+          <div class="form-group">
+            <label>Password:</label>
+            <input type="password" autocomplete="false" v-model="password" />
+            <span class="red">{{errors[0]}}</span>
+          </div>
+        </ValidationProvider>
+        <p v-if="message !== null" class="red">{{ message }}</p>
+        <button class="btn">Register</button>
+      </form>
+    </ValidationObserver>
   </modal>
 </template>
 
 <script>
 export default {
+  props: ["hideRegister"],
   data() {
     return {
-      name: "",
       email: "",
-      password: "",
-      message: ""
+      password: ""
     };
   },
   methods: {
-    resetState() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
-    },
     onSubmit() {
-      this.$store.dispatch("register", {
-        name: this.name,
-        email: this.email,
-        password: this.password
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return;
+        }
+        this.$store
+          .dispatch("register", {
+            email: this.email,
+            password: this.password
+          })
+          .then(() => {
+            if (this.message === null) {
+              // Reset values
+              this.email = this.password = "";
+              this.hideRegister();
+            }
+          });
       });
     }
   },
-  computed: {},
-  updated() {
-    if (this.$store.state.auth.message !== "") {
-      this.message = this.$store.state.auth.message;
-    } else {
-      this.message = "";
-    }
-
-    if (this.$store.state.auth.authenticate) {
-      this.$modal.hide("register-modal");
-      this.resetState();
+  computed: {
+    message() {
+      return this.$store.state.auth.message;
     }
   }
 };
@@ -89,5 +91,9 @@ export default {
 
 .btn:hover {
   opacity: 0.7;
+}
+
+.red {
+  color: red;
 }
 </style>

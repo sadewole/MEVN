@@ -11,7 +11,6 @@ const User = require('../../model/user')
 // @access public
 router.post('/', (req, res) => {
     const {
-        name,
         email,
         password
     } = req.body
@@ -33,7 +32,6 @@ router.post('/', (req, res) => {
             })
 
             const newUser = new User({
-                name,
                 email,
                 password
             })
@@ -55,7 +53,6 @@ router.post('/', (req, res) => {
                                     res.status(201).json({
                                         user: {
                                             id: user.id,
-                                            name: user.name,
                                             email: user.email
                                         },
                                         token

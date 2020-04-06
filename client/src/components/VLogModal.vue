@@ -1,44 +1,60 @@
 <template>
   <modal name="login-modal">
-    <form @submit.prevent="onSubmit">
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" autocomplete="false" v-model="email" />
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" autocomplete="false" v-model="password" />
-      </div>
-      <p v-if="message !== null" class="red">
-        {{ message }}
-      </p>
-      <button class="btn">Login</button>
-    </form>
+    <ValidationObserver ref="form">
+      <form @submit.prevent="onSubmit">
+        <ValidationProvider name="email" rules="required" v-slot="{errors}">
+          <div class="form-group">
+            <label>Email:</label>
+            <input type="email" autocomplete="false" v-model="email" />
+            <span class="red">{{errors[0]}}</span>
+          </div>
+        </ValidationProvider>
+        <ValidationProvider name="password" rules="required" v-slot="{errors}">
+          <div class="form-group">
+            <label>Password:</label>
+            <input type="password" autocomplete="false" v-model="password" />
+            <span class="red">{{errors[0]}}</span>
+          </div>
+        </ValidationProvider>
+        <p v-if="message !== null" class="red">{{ message }}</p>
+        <button class="btn">Login</button>
+      </form>
+    </ValidationObserver>
   </modal>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
+  props: ["hideLogin"],
   data() {
     return {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     };
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
+      this.$refs.form.validate().then(success => {
+        if (!success) {
+          return;
+        }
+        this.$store
+          .dispatch("login", {
+            email: this.email,
+            password: this.password
+          })
+          .then(() => {
+            if (this.message === null) {
+              // Reset values
+              this.email = this.password = "";
+              this.hideLogin();
+            }
+          });
       });
     }
   },
-  computed: mapGetters(['message']),
-  mounted() {
-    // // eslint-disable-next-line no-console
-    // console.log(this.errMessage);
-  }
+  computed: mapGetters(["message"])
 };
 </script>
 

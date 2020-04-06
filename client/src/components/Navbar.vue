@@ -1,7 +1,7 @@
 <template>
   <div>
-    <VLogModal />
-    <VRegisterModal />
+    <VLogModal :hideLogin="hideLogin" />
+    <VRegisterModal :hideRegister="hideRegister" />
     <div class="navbar">
       <div class="container">
         <a href="#">MEVN Todo Manager</a>
