@@ -12,7 +12,8 @@ const User = require('../../model/user')
 router.post('/', (req, res) => {
     const {
         email,
-        password
+        password,
+        name
     } = req.body
 
     // Simple validation
@@ -33,7 +34,8 @@ router.post('/', (req, res) => {
 
             const newUser = new User({
                 email,
-                password
+                password,
+                name
             })
 
             bcrypt.genSalt(10, (err, salt) => {
@@ -46,7 +48,7 @@ router.post('/', (req, res) => {
                                     id: user.id
                                 },
                                 process.env.jwtSecret, {
-                                    expiresIn: 3600
+                                    expiresIn: "1d"
                                 },
                                 (err, token) => {
                                     if (err) throw err

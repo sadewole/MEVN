@@ -5,6 +5,7 @@ const path = require('path')
 const cors = require('cors')
 
 require('dotenv').config()
+console.log(process.env.jwtSecret);
 const dbURI = 'mongodb://localhost:27017/mevn-shopping'
 // const dbURI = process.env.DBconnection
 
