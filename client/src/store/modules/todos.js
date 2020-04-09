@@ -1,7 +1,7 @@
 import axios from 'axios'
-import {
-    url
-} from '../../utils/config'
+// import {
+//     url
+// } from '../../utils/config'
 
 const state = {
     todos: []
@@ -15,14 +15,14 @@ const actions = {
     async fetchTodos({
         commit
     }) {
-        const response = await axios.get(`${url}/item`)
+        const response = await axios.get(`/api/v1/item`)
         commit('setTodos', response.data)
     },
 
     async addTodo({
         commit
     }, name) {
-        const response = await axios.post(`${url}/item`, {
+        const response = await axios.post(`/api/v1/item`, {
             name
         })
 
@@ -32,7 +32,7 @@ const actions = {
     async deleteTodo({
         commit
     }, id) {
-        await axios.delete(`${url}/item/${id}`)
+        await axios.delete(`/api/v1/item/${id}`)
 
         commit('removeTodo', id)
     },
@@ -44,7 +44,7 @@ const actions = {
         const limit = parseInt(e.target.options[e.target.options.selectedIndex].innerText)
 
 
-        const response = await axios.get(`${url}/item/`)
+        const response = await axios.get(`/api/v1/item/`)
         commit('setTodos', response.data.splice(0, limit))
 
     },
@@ -52,7 +52,7 @@ const actions = {
     async updateTodo({
         commit
     }, updTodo) {
-        const response = await axios.put(`${url}/item/${updTodo._id}`)
+        const response = await axios.put(`/api/v1/item/${updTodo._id}`)
 
         commit('updateTodo', response.data)
     }

@@ -1,7 +1,7 @@
 import axios from 'axios'
-import {
-    url
-} from '../../utils/config'
+// import {
+//     url
+// } from '../../utils/config'
 import setAuthToken from '../../utils/setAuthToken'
 
 const state = {
@@ -23,7 +23,7 @@ const actions = {
             const config = {
                 'Content-Type': 'application/json'
             }
-            const res = await axios.post(`${url}/user`, data, config)
+            const res = await axios.post(`/api/v1/user`, data, config)
             commit('authSuccess', res.data)
         } catch (err) {
             commit('authError', err.response.data)
@@ -36,7 +36,7 @@ const actions = {
             const config = {
                 'Content-Type': 'application/json'
             }
-            const res = await axios.post(`${url}/auth`, data, config)
+            const res = await axios.post(`/api/v1/auth`, data, config)
             commit('authSuccess', res.data)
         } catch (err) {
             commit('authError', err.response.data)
@@ -54,7 +54,10 @@ const mutations = {
         state.user = response.user
         state.authenticate = true
         state.message = null
-        let tokenObj = {value:response.token, expiresIn:new Date(new Date().getTime() + (23*60*60*1000)).getTime()}
+        let tokenObj = {
+            value: response.token,
+            expiresIn: new Date(new Date().getTime() + (23 * 60 * 60 * 1000)).getTime()
+        }
         tokenObj = JSON.stringify(tokenObj);
         localStorage.setItem('token', tokenObj);
         setAuthToken(localStorage.token)
@@ -73,10 +76,10 @@ const mutations = {
     isLogin: (state) => {
         let tokenObj = localStorage.getItem('token');
         //first check if token is present
-        if(tokenObj){
+        if (tokenObj) {
             tokenObj = JSON.parse(tokenObj);
             //check if token hasn't expired
-            if(!(new Date().getTime() > parseInt(tokenObj.expiresIn))){
+            if (!(new Date().getTime() > parseInt(tokenObj.expiresIn))) {
                 state.authenticate = true;
                 setAuthToken(tokenObj.value);
                 return tokenObj.value;
