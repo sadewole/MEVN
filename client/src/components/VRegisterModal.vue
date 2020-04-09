@@ -2,6 +2,13 @@
   <modal name="register-modal">
     <ValidationObserver ref="form">
       <form @submit.prevent="onSubmit">
+        <ValidationProvider name="name" rules="required" v-slot="{errors}">
+          <div class="form-group">
+            <label>Name:</label>
+            <input type="text" autocomplete="false" v-model="name" />
+            <span class="red">{{errors[0]}}</span>
+          </div>
+        </ValidationProvider>
         <ValidationProvider name="email" rules="required" v-slot="{errors}">
           <div class="form-group">
             <label>Email:</label>
@@ -29,7 +36,8 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      name: ""
     };
   },
   methods: {
@@ -41,7 +49,8 @@ export default {
         this.$store
           .dispatch("register", {
             email: this.email,
-            password: this.password
+            password: this.password,
+            name: this.name
           })
           .then(() => {
             if (this.message === null) {

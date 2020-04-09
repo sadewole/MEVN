@@ -54,7 +54,9 @@ const mutations = {
         state.user = response.user
         state.authenticate = true
         state.message = null
-        localStorage.setItem('token', response.token);
+        let tokenObj = {value:response.token, expiresIn:new Date(new Date().getTime() + (23*60*60*1000)).getTime()}
+        tokenObj = JSON.stringify(tokenObj);
+        localStorage.setItem('token', tokenObj);
         setAuthToken(localStorage.token)
     },
     authError: (state, response) => {
@@ -66,7 +68,21 @@ const mutations = {
         state.authenticate = false
         state.user = null
         localStorage.removeItem('token');
-        setAuthToken(localStorage.token)
+        setAuthToken(false)
+    },
+    isLogin: (state) => {
+        let tokenObj = localStorage.getItem('token');
+        //first check if token is present
+        if(tokenObj){
+            tokenObj = JSON.parse(tokenObj);
+            //check if token hasn't expired
+            if(!(new Date().getTime() > parseInt(tokenObj.expiresIn))){
+                state.authenticate = true;
+                setAuthToken(tokenObj.value);
+                return tokenObj.value;
+            }
+        }
+        return false;
     }
 }
 

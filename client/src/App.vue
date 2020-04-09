@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import Todo from "./components/Todo.vue";
 import AddTodo from "./components/AddTodo.vue";
 import FilterTodo from "./components/FilterTodo.vue";
@@ -32,7 +33,13 @@ export default {
     isAuthenticated() {
       return this.$store.state.auth.authenticate;
     }
-  }
+  },
+  methods: {
+    ...mapMutations(["isLogin"])
+  },
+  created() {
+    this.isLogin();
+  },
 };
 </script>
 
